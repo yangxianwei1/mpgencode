@@ -23,4 +23,29 @@ public class MyShiroConfig {
 
         return defaultShiroFilterChainDefinition;
     }
+// 要想在shiro中 启用注解支持 则还需要额外配置一些设置...如下
+// shiro 启用注解开始
+
+// 1️⃣ 开启 Shiro 注解支持
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+        advisor.setSecurityManager(securityManager);
+        return advisor;
+    }
+
+    // 2️⃣ 开启 AOP 自动代理（一定不能少）
+    @Bean
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator proxyCreator = new DefaultAdvisorAutoProxyCreator();
+        proxyCreator.setProxyTargetClass(true); // 使用 CGLIB 代理，防止注解失效
+        return proxyCreator;
+    }
+
+    // 3️⃣ 启用生命周期管理
+    @Bean
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
+// shiro 启用注解结束
 }
