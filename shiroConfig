@@ -1,0 +1,26 @@
+package edu.sxu.config;
+
+import org.apache.shiro.realm.Realm;
+import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class MyShiroConfig {
+    @Bean
+    public DefaultWebSecurityManager defaultWebSecurityManager(Realm realm){
+        DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
+        defaultWebSecurityManager.setRealm(realm);
+        return defaultWebSecurityManager;
+
+    }
+    @Bean
+    public DefaultShiroFilterChainDefinition defaultShiroFilterChainDefinition(){
+        DefaultShiroFilterChainDefinition defaultShiroFilterChainDefinition = new DefaultShiroFilterChainDefinition();
+//        defaultShiroFilterChainDefinition.addPathDefinition("/loginaa","authc");
+//        defaultShiroFilterChainDefinition.addPathDefinition("/*","anno");
+
+        return defaultShiroFilterChainDefinition;
+    }
+}
